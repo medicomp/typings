@@ -236,6 +236,8 @@ declare namespace dijit {
 	/* dijit/_FocusMixin */
 	interface _FocusMixin { }
 
+	interface _FocusMixinConstructor extends dojo._base.DeclareConstructor<_FocusMixin> { }
+
 	interface _WidgetBase extends dojo.Stateful, Destroyable {
 		/**
 		 * Called when the widget becomes "active" because
@@ -386,6 +388,8 @@ declare namespace dijit {
 		 */
 		closeDropDown(focus?: boolean): void;
 	}
+
+	interface _HasDropDownConstructor<T extends _WidgetBase> extends dojo._base.DeclareConstructor<_HasDropDown<T>> { }
 
 	/* dijit/_OnDijitClickMixin */
 
@@ -2304,4 +2308,162 @@ declare namespace dijit {
 	}
 
 	interface TooltipDialogConstructor extends _WidgetBaseConstructor<TooltipDialog> { }
+
+	/**
+	 * Interface for the JS Object associated with a palette cell (i.e. DOMNode)
+	 */
+	interface PaletteDye {
+		/**
+		 * Initialize according to value or alias like "white"
+		 */
+		new(alias: string, row?: number, column?: number): PaletteDye;
+
+		/**
+		 * Return "value" of cell; meaning of "value" varies by subclass.
+		 * For example color hex value, emoticon ascii value etc, entity hex value.
+		 */
+		getValue(): string;
+		/**
+		 * Add cell DOMNode inner structure
+		 */
+		fillCell(cell: Node, blankGif: string): void;
+	}
+
+	/**
+	 * A keyboard accessible palette, for picking a color/emoticon/etc.
+	 */
+	interface _PaletteMixin extends _CssStateMixin {
+		/**
+         * The currently focused cell (if the palette itself has focus), or otherwise
+         * the cell to be focused when the palette itself gets focus.
+         * Different from value, which represents the selected (i.e. clicked) cell.
+         */
+        _currentFocus: Node;
+        /**
+         * Index of the currently selected cell. Initially, none selected
+         */
+        _selectedCell: number;
+        /**
+         * This is the number of cells horizontally across.
+         */
+        _xDim: number;
+        /**
+         * This is the number of cells vertically down.
+         */
+        _yDim: number;
+        /**
+         * CSS class applied to each cell in the palette
+         */
+        cellClass: string;
+        /**
+         * Number of milliseconds before a held key or button becomes typematic
+         */
+        defaultTimeout: number;
+        /**
+         * Constructor for Object created for each cell of the palette.
+         * dyeClass should implement the dijit/_PaletteMixin.__Dye interface.
+         */
+        dyeClass: dojo.GenericConstructor<PaletteDye>;
+        /**
+         * Widget tab index.
+         */
+        tabIndex: string;
+        /**
+         * Fraction of time used to change the typematic timer between events
+         * 1.0 means that each typematic event fires at defaultTimeout intervals
+         * Less than 1.0 means that each typematic event fires at an increasing faster rate
+         */
+        timeoutChangeRate: number;
+        /**
+         * Currently selected color/emoticon/etc.
+         */
+        value: string;
+
+        /**
+         * Return instance of dijit.Dye for specified cell of palette
+         */
+        _dyeFactory(value: string, row?: number, col?: number, title?: string): PaletteDye;
+        /**
+         * Get JS object for given cell DOMNode
+         */
+        _getDye(cell: Node): PaletteDye;
+        /**
+         * This is the callback for typematic.
+         * It changes the focus and the highlighed cell.
+         * @param increment How much the key is navigated.
+         * @param typeCount How many times typematic has fired.
+         */
+        _navigateByKey(increment: number, typeCount: number): void;
+        /**
+         * Handler for click, enter key &amp; space key. Selects the cell.
+         * @param evt The event.
+         */
+        _onCellClick(evt: MouseEvent): void;
+        /**
+         * Subclass must call _preparePalette() from postCreate(), passing in the tooltip
+         * for each cell
+         * @param choices id's for each cell of the palette, used to create Dye JS object for each cell
+         * @param titles Localized tooltip for each cell
+         */
+        _preparePalette(choices: string[][], titles: string[]): void;
+        /**
+         * Sets which node is the focused cell.
+         *
+         * At any point in time there's exactly one
+         * cell with tabIndex != -1.   If focus is inside the palette then
+         * focus is on that cell.
+         * After calling this method, arrow key handlers and mouse click handlers
+         * should focus the cell in a setTimeout().
+         */
+        _setCurrent(node: Node): void;
+        /**
+         * Focus this widget.  Puts focus on the most recently focused cell.
+         */
+        focus(): void;
+        /**
+         * Callback when a cell is selected.
+         * @param value Value corresponding to cell.
+         */
+        onChange(value: string): void;
+		postCreate(): void;
+		
+		get(name: string): any;
+        set(name: string, value: any): this;
+		set(values: Object): this;
+		
+		/**
+         * This selects a cell. It triggers the onChange event.
+         * @param value Value of the cell to select
+         */
+        set(name: 'value', value: string): this;
+	}
+
+	interface _PaletteMixinConstructor extends dojo._base.DeclareConstructor<_PaletteMixin> { }
+
+	/**
+     * A keyboard accessible color-picking widget
+     *
+     * Grid showing various colors, so the user can pick a certain color.
+     * Can be used standalone, or as a popup.
+     */
+    interface ColorPalette extends _Widget, _TemplatedMixin, _PaletteMixin {
+        /**
+         * This represents the value of the colors.
+         * The first level is a hashmap of the different palettes available.
+         * The next two dimensions represent the columns and rows of colors.
+         */
+        _palettes: { [palette: string]: string[][] };
+        /**
+         * Size of grid, either "7x10" or "3x4".
+         */
+        palette: string;
+
+		buildRendering(): void;
+		
+		get(name: string): any;
+        set(name: string, value: any): this;
+        set(values: Object): this;
+    }
+
+    interface ColorPaletteConstructor extends dijit._WidgetBaseConstructor<ColorPalette> { }
 }

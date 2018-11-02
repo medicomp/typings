@@ -48,6 +48,18 @@ declare module 'dijit/_DialogMixin' {
 	export = _DialogMixin;
 }
 
+declare module 'dijit/_FocusMixin' {
+	type _FocusMixin = dijit._FocusMixin;
+	const _FocusMixin: dijit._FocusMixinConstructor;
+	export = _FocusMixin;
+}
+
+declare module 'dijit/_HasDropDown' {
+	type _HasDropDown<T extends dijit._WidgetBase> = dijit._HasDropDown<T>;
+	const _HasDropDown: dijit._HasDropDownConstructor<dijit._WidgetBase>;
+	export = _HasDropDown;
+}
+
 declare module 'dijit/_KeyNavContainer' {
 	type _KeyNavContainer = dijit._KeyNavContainer;
 	const _KeyNavContainer: dijit._KeyNavContainerConstructor;
@@ -64,6 +76,12 @@ declare module 'dijit/_MenuBase' {
 	type _MenuBase = dijit._MenuBase;
 	const _MenuBase: dijit._MenuBaseConstructor;
 	export = _MenuBase;
+}
+
+declare module 'dijit/_PaletteMixin' {
+	type _PaletteMixin = dijit._PaletteMixin;
+	const _PaletteMixin: dijit._PaletteMixinConstructor;
+	export = _PaletteMixin;
 }
 
 declare module 'dijit/_TemplatedMixin' {
@@ -164,6 +182,12 @@ declare module 'dijit/_editor/RichText' {
 	type RichText = dijit._editor.RichText;
 	const RichText: dijit._editor.RichTextConstructor;
 	export = RichText;
+}
+
+declare module 'dijit/ColorPalette' {
+	type ColorPalette = dijit.ColorPalette;
+	const ColorPalette: dijit.ColorPaletteConstructor;
+	export = ColorPalette;
 }
 
 declare module 'dijit/ConfirmDialog' {
