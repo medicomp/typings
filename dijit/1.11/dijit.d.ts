@@ -1,3 +1,5 @@
+/// <reference path="../../dojo/1.11/store.d.ts" />
+
 declare namespace dijit {
 	/* Global Dijit Interface */
 	interface Dijit { }
@@ -389,7 +391,7 @@ declare namespace dijit {
 		closeDropDown(focus?: boolean): void;
 	}
 
-	interface _HasDropDownConstructor<T extends _WidgetBase> extends dojo._base.DeclareConstructor<_HasDropDown<T>> { }
+	interface _HasDropDownConstructor extends dojo._base.DeclareConstructor<_HasDropDown<_WidgetBase>> { }
 
 	/* dijit/_OnDijitClickMixin */
 
@@ -2883,7 +2885,7 @@ declare namespace dijit {
      * or if a non-focusable node of this widget or a descendant was recently clicked.
      * Call focus.watch("curNode", callback) to track the current focused DOMNode,
      * or focus.watch("activeStack", callback) to track the currently focused stack of widgets.
-     * Call focus.on("widget-blur", func) or focus.on("widget-focus", ) to monitor when
+     * Call focus.on("widget-blur", func) or focus.on("widget-focus", ...) to monitor when
      * when widgets become active/inactive
      * Finally, focus(node) will focus a node, suppressing errors if the node doesn't exist.
      */
@@ -2951,5 +2953,5 @@ declare namespace dijit {
          * @returns Handle with remove() method to deregister.
          */
         registerWin(targetWindow?: Window, effectiveNode?: Node): dojo.Handle;
-    }
+	}
 }

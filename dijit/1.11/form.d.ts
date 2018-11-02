@@ -130,6 +130,8 @@ declare namespace dijit {
 			set(values: Object): this;
 		}
 
+		interface _AutoCompleterMixinConstructor extends dojo._base.DeclareConstructor<_AutoCompleterMixin<any, any, any>> { }
+
 		/* dijit/form/_ButtonMixin */
 
 		interface _ButtonMixin {
@@ -151,6 +153,8 @@ declare namespace dijit {
 			onClick(e: DocumentEvent): boolean;
 			onSetLabel(e: DocumentEvent): void;
 		}
+	
+    	interface _ButtonMixinConstructor extends dojo._base.DeclareConstructor<_ButtonMixin> { }
 
 		/* dijit/form/_CheckBoxMixin */
 
@@ -176,6 +180,8 @@ declare namespace dijit {
 
 			reset: () => void;
 		}
+	
+    	interface _CheckBoxMixinConstructor extends dojo._base.DeclareConstructor<_CheckBoxMixin> { }
 
 		/* dijit/form/_ComboBoxMenu */
 
@@ -274,6 +280,10 @@ declare namespace dijit {
 			set(name: 'value', value: Object): this;
 			set(name: string, value: any): this;
 			set(values: Object): this;
+		}
+
+		interface _ComboBoxMenuMixinConstructor extends _WidgetBaseConstructor<_ComboBoxMenuMixin<any>> {
+			new <T>(params: Object, srcNodeRef: dojo.NodeOrString): _ComboBoxMenuMixin<T>;
 		}
 
 		/* dijit/form/_DateTimeTextBox */
@@ -381,6 +391,8 @@ declare namespace dijit {
 			startup(): void;
 			resize(): void;
 		}
+
+		interface _ExpandingTextAreaMixinConstructor extends dojo._base.DeclareConstructor<_ExpandingTextAreaMixin> { }
 
 		/* dijit/form/_FormMixin */
 

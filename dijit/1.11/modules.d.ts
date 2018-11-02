@@ -56,7 +56,7 @@ declare module 'dijit/_FocusMixin' {
 
 declare module 'dijit/_HasDropDown' {
 	type _HasDropDown<T extends dijit._WidgetBase> = dijit._HasDropDown<T>;
-	const _HasDropDown: dijit._HasDropDownConstructor<dijit._WidgetBase>;
+	const _HasDropDown: dijit._HasDropDownConstructor;
 	export = _HasDropDown;
 }
 
@@ -419,6 +419,48 @@ declare module 'dijit/_base/wai' {
 declare module 'dijit/_base/window' {
 	const window: dijit._base.Window;
 	export = window;
+}
+
+declare module 'dijit/form/_AutoCompleterMixin' {
+	type _AutoCompleterMixin = dijit.form._AutoCompleterMixin<any, any, any>;
+	const _AutoCompleterMixin: dijit.form._AutoCompleterMixinConstructor;
+	export = _AutoCompleterMixin;
+}
+
+declare module 'dijit/form/_ButtonMixin' {
+	type _ButtonMixin = dijit.form._ButtonMixin;
+	const _ButtonMixin: dijit.form._ButtonMixinConstructor;
+	export = _ButtonMixin;
+}
+
+declare module 'dijit/form/_CheckBoxMixin' {
+	type _CheckBoxMixin = dijit.form._CheckBoxMixin;
+	const _CheckBoxMixin: dijit.form._CheckBoxMixinConstructor;
+	export = _CheckBoxMixin;
+}
+
+declare module 'dijit/form/_ComboBoxMenu' {
+	type _ComboBoxMenu<T> = dijit.form._ComboBoxMenu<T>;
+	const _ComboBoxMenu: dijit.form._ComboBoxMenuConstructor;
+	export = _ComboBoxMenu;
+}
+
+declare module 'dijit/form/_ComboBoxMenuMixin' {
+	type _ComboBoxMenuMixin<T> = dijit.form._ComboBoxMenuMixin<T>;
+	const _ComboBoxMenuMixin: dijit.form._ComboBoxMenuMixinConstructor;
+	export = _ComboBoxMenuMixin;
+}
+
+declare module 'dijit/form/_DateTimeTextBox' {
+	type _DateTimeTextBox<T extends dijit._WidgetBase> = dijit.form._DateTimeTextBox<T>;
+	const _DateTimeTextBox: dijit.form._DateTimeTextBoxConstructor<dijit._WidgetBase>;
+	export = _DateTimeTextBox;
+}
+
+declare module 'dijit/form/_ExpandingTextAreaMixin' {
+	type _ExpandingTextAreaMixin = dijit.form._ExpandingTextAreaMixin;
+	const _ExpandingTextAreaMixin: dijit.form._ExpandingTextAreaMixinConstructor;
+	export = _ExpandingTextAreaMixin;
 }
 
 declare module 'dijit/form/_FormMixin' {
