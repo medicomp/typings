@@ -2457,13 +2457,265 @@ declare namespace dijit {
          * Size of grid, either "7x10" or "3x4".
          */
         palette: string;
-
-		buildRendering(): void;
 		
 		get(name: string): any;
         set(name: string, value: any): this;
         set(values: Object): this;
     }
 
-    interface ColorPaletteConstructor extends dijit._WidgetBaseConstructor<ColorPalette> { }
+	interface ColorPaletteConstructor extends dijit._WidgetBaseConstructor<ColorPalette> { }
+	
+	/**
+     * A time picker dropdown, used by dijit/form/TimeTextBox.
+     * This widget is not available as a standalone widget due to lack of accessibility support.
+     */
+    interface _TimePicker extends _WidgetBase, dijit.form._ListMouseMixin {
+        _clickableIncrement: number;
+        _totalIncrements: number;
+        _visibleIncrement: number;
+        /**
+         * The root className to use for the various states of this widget
+         */
+        baseClass: string;
+        /**
+         * ISO-8601 string representing the interval between choices in the time picker.
+         * Set in local time, without a time zone.
+         * Example: T00:15:00 creates 15 minute increments
+         * Must divide dijit/_TimePicker.visibleIncrement evenly
+         */
+        clickableIncrement: string;
+        /**
+         * Specifies valid range of times (start time, end time), and also used by TimeTextBox to pass other
+         * options to the TimePicker: pickerMin, pickerMax, clickableIncrement, and visibleIncrement.
+         */
+        constraints: _TimePickerConstraints;
+        /**
+         * The string to filter by
+         */
+        filterString: string;
+        /**
+         * ISO-8601 string representing the last (possible) time
+         * added to the time picker.
+         * Set in local time, without a time zone.
+         */
+        pickerMax: string;
+        /**
+         * ISO-8601 string representing the time of the first
+         * visible element in the time picker.
+         * Set in local time, without a time zone.
+         */
+        pickerMin: string;
+        /**
+         * Time to display.
+         * Defaults to current time.
+         * Can be a Date object or an ISO-8601 string.
+         * If you specify the GMT time zone (-01:00),
+         * the time will be converted to the local time in the local time zone.
+         * Otherwise, the time is considered to be in the local time zone.
+         * If you specify the date and isDate is true, the date is used.
+         * Example: if your local time zone is GMT -05:00,
+         * T10:00:00 becomes T10:00:00-05:00 (considered to be local time),
+         * T10:00:00-01:00 becomes T06:00:00-05:00 (4 hour difference),
+         * T10:00:00Z becomes T05:00:00-05:00 (5 hour difference between Zulu and local time)
+         * yyyy-mm-ddThh:mm:ss is the format to set the date and time
+         * Example: 2007-06-01T09:00:00
+         */
+        value: string;
+        /**
+         * ISO-8601 string representing the interval between "major" choices in the time picker.
+         * Each theme will highlight the major choices with a larger font / different color / etc.
+         * Set in local time, without a time zone.
+         * Example: T01:00:00 creates text in every 1 hour increment
+         */
+        visibleIncrement: string;
+
+        /**
+         * Creates a clickable time option, or returns null if the specified index doesn't match the filter
+         */
+        _createOption(index: number): Node;
+        /**
+         * Returns a DocumentFragment of nodes with the filter applied.  At most maxNum nodes
+         * will be returned - but fewer may be returned as well.  If the
+         * before parameter is set to true, then it will return the elements
+         * before the given index
+         */
+        _getFilteredNodes(start: number, maxNum: number, before: boolean, lastNode: Node): Node[];
+        /**
+         * Turns on/off highlight effect on a node based on mouse out/over event
+         */
+        _highlightOption(node: Node, highlight: boolean): void;
+        /**
+         * Called when user clicks or keys to an option in the drop down list
+         * @param tgt tgt.target specifies the node that was clicked
+         * @param change If true, fire "change" event, otherwise just fire "input" event.
+         */
+        _onOptionSelected(tgt: { target: Node }, change: boolean): any;
+        /**
+         * Displays the relevant choices in the drop down list
+         */
+        _showText(): void;
+        /**
+         * Called from dijit/form/_DateTimeTextBox to pass a keypress event
+         * from the dijit/form/TimeTextBox to be handled in this widget
+         */
+        handleKey(e: Event): boolean;
+        /**
+         * May be overridden to disable certain dates in the TimePicker e.g. isDisabledDate=locale.isWeekend
+         */
+        isDisabledDate(dateObject: Date, locale?: string): boolean;
+        /**
+         * Notification that a time was selected.  It may be the same as the previous value.
+         */
+        onChange(time: Date): void;
+        onClick(node?: Node): void;
+        onDeselect(node?: Node): void;
+        onHover(node?: Node): void;
+        onOpen(): void;
+        onSelect(node?: Node): void;
+        onUnhover(node?: Node): void;
+        /**
+         * Format a Date object as a string according a subset of the ISO-8601 standard
+         *
+         * When options.selector is omitted, output follows <a href="http://www.ietf.org/rfc/rfc3339.txt">RFC3339
+         * The local time zone is included as an offset from GMT, except when selector=='time' (time without a date)
+         * Does not check bounds.  Only years between 100 and 9999 are supported.
+         *
+         * @param dateObject A Date object
+         */
+        serialize(dateObject: Date, options?: dojo.date.StampFormatOptions): any;
+
+		get(name: string): any;
+        set(name: string, value: any): this;
+        set(values: Object): this;
+
+        set(name: 'constraints', value: _TimePickerConstraints): this;
+        /**
+         * Called by TimeTextBox to filter the values shown in my list
+         */
+        set(name: 'filterString', value: string): this;
+        /**
+         * Hook so set('value', ...) works.
+         *
+         * Set the value of the TimePicker.
+         * Redraws the TimePicker around the new date.
+         */
+        set(name: 'value', value: Date): this;
+    }
+
+    // tslint:disable-next-line class-name
+    interface _TimePickerConstructor extends dijit._WidgetBaseConstructor<_TimePicker> { }
+
+    // tslint:disable-next-line class-name
+    interface _TimePickerConstraints {
+        /**
+         * override strings for am in times
+         */
+        am: string;
+        /**
+         * See dijit/_TimePicker.clickableIncrement
+         */
+        clickableIncrement: string;
+        /**
+         * override pattern with this string
+         */
+        datePattern: string;
+        /**
+         * choice of long, short, medium, or full (plus any custom additions).  Defaults to 'short'
+         */
+        formatLength: string;
+        /**
+         * (format only) use 4 digit years whenever 2 digit years are called for
+         */
+        fullYear: boolean;
+        /**
+         * override the locale used to determine formatting rules
+         */
+        locale: string;
+        /**
+         * override strings for pm in times
+         */
+        pm: string;
+        /**
+         * choice of 'time','date' (default: date and time)
+         */
+        selector: string;
+        /**
+         * (parse only) strict parsing, off by default
+         */
+        strict: boolean;
+        /**
+         * override pattern with this string
+         */
+        timePattern: string;
+	}
+	
+	/**
+     * Accessibility utility functions (keyboard, tab stops, etc.)
+     */
+    interface a11y {
+        /**
+         * Finds descendants of the specified root node.
+         *
+         * Finds the following descendants of the specified root node:
+         * - the first tab-navigable element in document order
+         *   without a tabIndex or with tabIndex="0"
+         * - the last tab-navigable element in document order
+         *   without a tabIndex or with tabIndex="0"
+         * - the first element in document order with the lowest
+         *   positive tabIndex value
+         * - the last element in document order with the highest
+         *   positive tabIndex value
+         */
+        _getTabNavigable(root: Node): { first: Element, last: Element, lowest: Element, highest: Element };
+        _isElementShown(elem?: Element): boolean;
+        /**
+         * Returns effective tabIndex of an element, either a number, or undefined if element isn't focusable.
+         */
+        effectiveTabIndex(elem: Element): number;
+        /**
+         * Finds the descendant of the specified root node
+         * that is first in the tabbing order
+         */
+        getFirstInTabbingOrder(root: string | Node, doc?: Document): Element;
+        /**
+         * Finds the descendant of the specified root node
+         * that is last in the tabbing order
+         */
+        getLastInTabbingOrder(root: string | Node, doc?: Document): Element;
+        /**
+         * Tests if element is tab-navigable even without an explicit tabIndex setting
+         */
+        hasDefaultTabStop(elem: Element): boolean;
+        /**
+         * Tests if an element is focusable by tabbing to it, or clicking it with the mouse.
+         */
+        isFocusable(elem: Element): boolean;
+        /**
+         * Tests if an element is tab-navigable
+         */
+        isTabNavigable(elem: Element): boolean;
+    }
+
+    /**
+     * Custom press, release, and click synthetic events
+     * which trigger on a left mouse click, touch, or space/enter keyup.
+     */
+    interface a11yclick {
+        /**
+         * Logical click operation for mouse, touch, or keyboard (space/enter key)
+         */
+        click(node: Node, listener: (e: MouseEvent | KeyboardEvent | TouchEvent) => void): void;
+        /**
+         * Mouse cursor or a finger is dragged over the given node.
+         */
+        move(node: Node, listener: (e: MouseEvent | TouchEvent) => void): void;
+        /**
+         * Mousedown (left button), touchstart, or keydown (space or enter) corresponding to logical click operation.
+         */
+        press(node: Node, listener: (e: MouseEvent | KeyboardEvent | TouchEvent) => void): void;
+        /**
+         * Mouseup (left button), touchend, or keyup (space or enter) corresponding to logical click operation.
+         */
+        release(node: Node, listener: (e: MouseEvent | KeyboardEvent | TouchEvent) => void): void;
+    }
 }

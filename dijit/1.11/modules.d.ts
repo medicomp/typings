@@ -184,6 +184,16 @@ declare module 'dijit/_editor/RichText' {
 	export = RichText;
 }
 
+declare module 'dijit/a11y' {
+	const a11y: dijit.a11y;
+	export = a11y;
+}
+
+declare module 'dijit/a11yclick' {
+	const a11yclick: dijit.a11yclick;
+	export = a11yclick;
+}
+
 declare module 'dijit/ColorPalette' {
 	type ColorPalette = dijit.ColorPalette;
 	const ColorPalette: dijit.ColorPaletteConstructor;
@@ -293,6 +303,12 @@ declare module 'dijit/PopupMenuItem' {
 declare module 'dijit/registry' {
 	const registry: dijit.Registry;
 	export = registry;
+}
+
+declare module 'dijit/_TimePicker' {
+	type _TimePicker = dijit._TimePicker;
+	const _TimePicker: dijit._TimePickerConstructor;
+	export = _TimePicker;
 }
 
 declare module 'dijit/TitlePane' {
