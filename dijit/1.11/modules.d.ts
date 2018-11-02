@@ -200,10 +200,28 @@ declare module 'dijit/ColorPalette' {
 	export = ColorPalette;
 }
 
+declare module 'dijit/BackgroundIframe' {
+	type BackgroundIframe = dijit.BackgroundIframe;
+	const BackgroundIframe: dijit.BackgroundIframeConstructor;
+	export = BackgroundIframe;
+}
+
+declare module 'dijit/CheckedMenuItem' {
+	type CheckedMenuItem = dijit.CheckedMenuItem;
+	const CheckedMenuItem: dijit.CheckedMenuItemConstructor;
+	export = CheckedMenuItem;
+}
+
 declare module 'dijit/ConfirmDialog' {
 	type ConfirmDialog = dijit.ConfirmDialog;
 	const ConfirmDialog: dijit.ConfirmDialogConstructor;
 	export = ConfirmDialog;
+}
+
+declare module 'dijit/ConfirmTooltipDialog' {
+	type ConfirmTooltipDialog = dijit.ConfirmTooltipDialog;
+	const ConfirmTooltipDialog: dijit.ConfirmTooltipDialogConstructor;
+	export = ConfirmTooltipDialog;
 }
 
 declare module 'dijit/Calendar' {
@@ -218,6 +236,12 @@ declare module 'dijit/CalendarLite' {
 	export = CalendarLite;
 }
 
+declare module 'dijit/Declaration' {
+	type Declaration = dijit.Declaration;
+	const Declaration: dijit.DeclarationConstructor;
+	export = Declaration;
+}
+
 declare module 'dijit/Destroyable' {
 	type Destroyable = dijit.Destroyable;
 	const Destroyable: dijit.DestroyableConstructor;
@@ -228,6 +252,12 @@ declare module 'dijit/Dialog' {
 	type Dialog = dijit.Dialog;
 	const Dialog: dijit.DialogConstructor;
 	export = Dialog;
+}
+
+declare module 'dijit/DialogUnderlay' {
+	type DialogUnderlay = dijit.DialogUnderlay;
+	const DialogUnderlay: dijit.DialogUnderlayConstructor;
+	export = DialogUnderlay;
 }
 
 declare module 'dijit/DropDownMenu' {
@@ -246,6 +276,11 @@ declare module 'dijit/Fieldset' {
 	type Fieldset = dijit.Fieldset;
 	const Fieldset: dijit.FieldsetConstructor;
 	export = Fieldset;
+}
+
+declare module 'dijit/focus' {
+	const FocusManager: dijit.FocusManager;
+	export = FocusManager;
 }
 
 declare module 'dijit/Menu' {

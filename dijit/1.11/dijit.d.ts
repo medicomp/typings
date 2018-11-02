@@ -2717,5 +2717,239 @@ declare namespace dijit {
          * Mouseup (left button), touchend, or keyup (space or enter) corresponding to logical click operation.
          */
         release(node: Node, listener: (e: MouseEvent | KeyboardEvent | TouchEvent) => void): void;
+	}
+	
+	/**
+	 * For IE/FF z-index shenanigans. id attribute is required.
+	 * Makes a background iframe as a child of node, that fills
+	 * area (and position) of node
+	 */
+	interface BackgroundIframe {
+		/**
+		 * Resize the iframe so it's the same size as node.
+		 * Needed on IE6 and IE/quirks because height:100% doesn't work right.
+		 */
+		resize(node: Node): void;
+		/**
+		 * destroy the iframe
+		 */
+		destroy(): void;
+	}
+
+	interface BackgroundIframeConstructor {
+		new(node: Node): BackgroundIframe;
+	}
+
+	/**
+     * A checkbox-like menu item for toggling on and off
+     */
+    interface CheckedMenuItem extends MenuItem {
+        /**
+         * Our checked state
+         */
+        checked: boolean;
+        /**
+         * Character (or string) used in place of checkbox icon when display in high contrast mode
+         */
+        checkedChar: string;
+        iconClass: string;
+        role: string;
+
+        /**
+         * Clicking this item just toggles its state
+         */
+        _onClick(evt: MouseEvent): void;
+        /**
+         * User defined function to handle check/uncheck events
+         */
+		onChange(checked: boolean): void;
+		
+		get(name: string): any;
+        set(name: string, value: any): this;
+        set(values: Object): this;
+
+        set(name: 'checked', value: boolean): this;
+    }
+
+	interface CheckedMenuItemConstructor extends dijit._WidgetBaseConstructor<CheckedMenuItem> { }
+	
+	/**
+     * A TooltipDialog with OK/Cancel buttons.
+     */
+    interface ConfirmTooltipDialog extends TooltipDialog, _ConfirmDialogMixin {
+        get(name: string): any;
+        set(name: string, value: any): this;
+        set(values: Object): this;
+    }
+
+	interface ConfirmTooltipDialogConstructor extends dijit._WidgetBaseConstructor<ConfirmTooltipDialog> { }
+
+	/**
+     * The Declaration widget allows a developer to declare new widget
+     * classes directly from a snippet of markup.
+     */
+    interface Declaration extends _Widget {
+        /**
+         * Flag to parser to leave alone the script tags contained inside of me
+         */
+		_noScript: boolean;
+		/**
+		 * Set of attributes for this widget along with default values, ex:
+		 * {delay: 100, title: "hello world"}
+		 */
+        defaults: Object;
+        /**
+         * List containing the prototype for this widget, and also any mixins,
+         * ex: ["dijit._Widget", "dijit._Container"]
+         */
+        mixins: string[];
+        /**
+         * Flag to parser to not try and parse widgets declared inside of me
+         */
+        stopParser: boolean;
+        /**
+         * Name of class being declared, ex: "acme.myWidget"
+         */
+        widgetClass: string;
+    }
+
+	interface DeclarationConstructor extends dijit._WidgetBaseConstructor<Declaration> { }
+	
+	/**
+     * A component used to block input behind a dijit/Dialog.
+     * Normally this class should not be instantiated directly, but rather shown and hidden via
+     * DialogUnderlay.show() and DialogUnderlay.hide().  And usually the module is not accessed directly
+     * at all, since the underlay is shown and hidden by Dialog.DialogLevelManager.
+     * The underlay itself can be styled based on and id:
+     *
+     * #myDialog_underlay { background-color:red; }
+     * In the case of dijit.Dialog, this id is based on the id of the Dialog,
+     *
+     * suffixed with _underlay.
+     */
+    interface DialogUnderlay extends _Widget, _TemplatedMixin {
+		/**
+		 * This will get overwritten as soon as show() is call, but leave an empty array in case hide() or destroy()
+		 * is called first.   The array is shared between instances but that's OK because we never write into it.
+		 */
+		_modalConnects: dojo.Handle[];
+		/**
+		 * This class name is used on the DialogUnderlay node, in addition to dijitDialogUnderlay
+		 */
+        class: string;
+        /**
+         * Id of the dialog. DialogUnderlay's id is based on this id
+         */
+        dialogId: string;
+
+        /**
+         * Extension point so Dialog can monitor keyboard events on the underlay.
+         */
+        _onKeyDown(): void;
+        /**
+         * Hides the dialog underlay
+         */
+        hide(): void;
+        /**
+         * Sets the background to the size of the viewport
+         *
+         * Sets the background to the size of the viewport (rather than the size
+         * of the document) since we need to cover the whole browser window, even
+         * if the document is only a few lines long.
+         */
+        layout(): void;
+        /**
+         * Show the dialog underlay
+         */
+		show(): void;
+		
+		get(name: string): any;
+        set(name: string, value: any): this;
+        set(values: Object): this;
+
+        set(name: 'class', value: string): this;
+        set(name: 'dialogId', value: string): this;
+    }
+
+    interface DialogUnderlayConstructor extends dijit._WidgetBaseConstructor<DialogUnderlay> {
+		show(attrs: Object, zIndex: number): DialogUnderlay;
+		hide(): void;
+	}
+	
+	/**
+     * Tracks the currently focused node, and which widgets are currently "active".
+     * Access via require(["dijit/focus"], function(focus){  }).
+     * A widget is considered active if it or a descendant widget has focus,
+     * or if a non-focusable node of this widget or a descendant was recently clicked.
+     * Call focus.watch("curNode", callback) to track the current focused DOMNode,
+     * or focus.watch("activeStack", callback) to track the currently focused stack of widgets.
+     * Call focus.on("widget-blur", func) or focus.on("widget-focus", ) to monitor when
+     * when widgets become active/inactive
+     * Finally, focus(node) will focus a node, suppressing errors if the node doesn't exist.
+     */
+    interface FocusManager extends dojo.Stateful, dojo.Evented {
+        /**
+         * List of currently active widgets (focused widget and it's ancestors)
+         */
+        activeStack: _WidgetBase[];
+        /**
+         * Currently focused item on screen
+         */
+        curNode: Node;
+
+        /**
+         * Called when focus leaves a node.
+         * Usually ignored, unless it isn't followed by touching another node,
+         * which indicates that we tabbed off the last field on the page,
+         * in which case every widget is marked inactive
+         */
+        _onBlurNode(node: Node): void;
+        /**
+         * Callback when node is focused
+         */
+        _onFocusNode(node: Node): void;
+        /**
+         * Callback when node is focused or touched.
+         * Note that _onFocusNode() calls _onTouchNode().
+         * @param node The node that was touched.
+         * @param by "mouse" if the focus/touch was caused by a mouse down event
+         */
+        _onTouchNode(node: Node, by: string): void;
+        /**
+         * The stack of active widgets has changed.  Send out appropriate events and records new stack.
+         * @param newStack array of widget id's, starting from the top (outermost) widget
+         * @param by "mouse" if the focus/touch was caused by a mouse down event
+         */
+        _setStack(newStack: string[], by: string): void;
+        /**
+         * Focus the specified node, suppressing errors if they occur
+         * @param node
+         */
+        focus(node: Node): void;
+        /**
+         * Registers listeners on the specified iframe so that any click
+         * or focus event on that iframe (or anything in it) is reported
+         * as a focus/click event on the &lt;iframe&gt; itself.
+         *
+         * Currently only used by editor.
+         *
+         * @param iframe
+         * @returns Handle with remove() method to deregister.
+         */
+        registerIframe(iframe: Node): dojo.Handle;
+        /**
+         * Registers listeners on the specified window (either the main
+         * window or an iframe's window) to detect when the user has clicked somewhere
+         * or focused somewhere.
+         *
+         * Users should call registerIframe() instead of this method.
+         *
+         * @param targetWindow If specified this is the window associated with the iframe,
+         * i.e. iframe.contentWindow.
+         * @param effectiveNode If specified, report any focus events inside targetWindow as
+         * an event on effectiveNode, rather than on evt.target.
+         * @returns Handle with remove() method to deregister.
+         */
+        registerWin(targetWindow?: Window, effectiveNode?: Node): dojo.Handle;
     }
 }
