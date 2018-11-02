@@ -121,7 +121,13 @@ declare namespace dijit {
 		 * Label of cancel button.
 		 */
 		buttonCancel: string;
+
+		set(name: 'buttonOk', value: string): this;
+		set(name: 'buttonCancel', value: string): this;
+		set(name: string, value: any): this;
 	}
+
+	interface _ConfirmDialogMixinConstructor extends dojo._base.DeclareConstructor<_ConfirmDialogMixin> { }
 
 	/* dijit/_Contained */
 
@@ -224,6 +230,8 @@ declare namespace dijit {
 		 */
 		onExecute(): void;
 	}
+
+	interface _DialogMixinConstructor extends dojo._base.DeclareConstructor<_DialogMixin> { }
 
 	/* dijit/_FocusMixin */
 	interface _FocusMixin { }

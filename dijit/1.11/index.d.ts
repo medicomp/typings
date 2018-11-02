@@ -3,3 +3,4 @@
 /// <reference path="_base.d.ts" />
 /// <reference path="form.d.ts" />
 /// <reference path="layout.d.ts" />
+/// <reference path="editor.d.ts" />

@@ -24,6 +24,12 @@ declare module 'dijit/_CssStateMixin' {
 	export = _CssStateMixin;
 }
 
+declare module 'dijit/_ConfirmDialogMixin' {
+	type _ConfirmDialogMixin = dijit._ConfirmDialogMixin;
+	const _ConfirmDialogMixin: dijit._ConfirmDialogMixinConstructor;
+	export = _ConfirmDialogMixin;
+}
+
 declare module 'dijit/_Contained' {
 	type _Contained = dijit._Contained;
 	const _Contained: dijit._ContainedConstructor;
@@ -34,6 +40,12 @@ declare module 'dijit/_Container' {
 	type _Container = dijit._Container;
 	const _Container: dijit._ContainerConstructor;
 	export = _Container;
+}
+
+declare module 'dijit/_DialogMixin' {
+	type _DialogMixin = dijit._DialogMixin;
+	const _DialogMixin: dijit._DialogMixinConstructor;
+	export = _DialogMixin;
 }
 
 declare module 'dijit/_KeyNavContainer' {
@@ -64,6 +76,94 @@ declare module 'dijit/_WidgetsInTemplateMixin' {
 	type _WidgetsInTemplateMixin = dijit._WidgetsInTemplateMixin;
 	const _WidgetsInTemplateMixin: dijit._WidgetsInTemplateMixinConstructor;
 	export = _WidgetsInTemplateMixin;
+}
+
+declare module 'dijit/_editor/_Plugin' {
+	type _Plugin = dijit._editor._Plugin;
+	const _Plugin: dijit._editor._PluginConstructor;
+	export = _Plugin;
+}
+
+declare module 'dijit/_editor/plugins/AlwaysShowToolbar' {
+	type AlwaysShowToolbar = dijit._editor.plugins.AlwaysShowToolbar;
+	const AlwaysShowToolbar: dijit._editor.plugins.AlwaysShowToolbarConstructor;
+	export = AlwaysShowToolbar;
+}
+
+declare module 'dijit/_editor/plugins/EnterKeyHandling' {
+	type EnterKeyHandling = dijit._editor.plugins.EnterKeyHandling;
+	const EnterKeyHandling: dijit._editor.plugins.EnterKeyHandlingConstructor;
+	export = EnterKeyHandling;
+}
+
+declare module 'dijit/_editor/plugins/FontChoice' {
+	type FontChoice = dijit._editor.plugins.FontChoice;
+	const FontChoice: dijit._editor.plugins.FontChoiceConstructor;
+	export = FontChoice;
+}
+
+declare module 'dijit/_editor/plugins/FullScreen' {
+	type FullScreen = dijit._editor.plugins.FullScreen;
+	const FullScreen: dijit._editor.plugins.FullScreenConstructor;
+	export = FullScreen;
+}
+
+declare module 'dijit/_editor/plugins/LinkDialog' {
+	type LinkDialog = dijit._editor.plugins.LinkDialog;
+	const LinkDialog: dijit._editor.plugins.LinkDialogConstructor;
+	export = LinkDialog;
+}
+
+declare module 'dijit/_editor/plugins/NewPage' {
+	type NewPage = dijit._editor.plugins.NewPage;
+	const NewPage: dijit._editor.plugins.NewPageConstructor;
+	export = NewPage;
+}
+
+declare module 'dijit/_editor/plugins/Print' {
+	type Print = dijit._editor.plugins.Print;
+	const Print: dijit._editor.plugins.PrintConstructor;
+	export = Print;
+}
+
+declare module 'dijit/_editor/plugins/TabIndent' {
+	type TabIndent = dijit._editor.plugins.TabIndent;
+	const TabIndent: dijit._editor.plugins.TabIndentConstructor;
+	export = TabIndent;
+}
+
+declare module 'dijit/_editor/plugins/TextColor' {
+	type TextColor = dijit._editor.plugins.TextColor;
+	const TextColor: dijit._editor.plugins.TextColorConstructor;
+	export = TextColor;
+}
+
+declare module 'dijit/_editor/plugins/ToggleDir' {
+	type ToggleDir = dijit._editor.plugins.ToggleDir;
+	const ToggleDir: dijit._editor.plugins.ToggleDirConstructor;
+	export = ToggleDir;
+}
+
+declare module 'dijit/_editor/plugins/ViewSource' {
+	type ViewSource = dijit._editor.plugins.ViewSource;
+	const ViewSource: dijit._editor.plugins.ViewSourceConstructor;
+	export = ViewSource;
+}
+
+declare module 'dijit/_editor/html' {
+	const html: dijit._editor.html;
+	export = html;
+}
+
+declare module 'dijit/_editor/range' {
+	const range: dijit._editor.range;
+	export = range;
+}
+
+declare module 'dijit/_editor/RichText' {
+	type RichText = dijit._editor.RichText;
+	const RichText: dijit._editor.RichTextConstructor;
+	export = RichText;
 }
 
 declare module 'dijit/ConfirmDialog' {
@@ -100,6 +200,12 @@ declare module 'dijit/DropDownMenu' {
 	type DropDownMenu = dijit.DropDownMenu;
 	const DropDownMenu: dijit.DropDownMenuConstructor;
 	export = DropDownMenu;
+}
+
+declare module 'dijit/Editor' {
+	type Editor = dijit.Editor;
+	const Editor: dijit.EditorConstructor;
+	export = Editor;
 }
 
 declare module 'dijit/Fieldset' {
